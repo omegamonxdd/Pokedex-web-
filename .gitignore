@@ -1,0 +1,177 @@
+# =====================================================================
+# .gitignore orientado a SEGURIDAD
+# ---------------------------------------------------------------------
+# OJO: ignorar un archivo NO lo quita del historial si ya se subió.
+# Si algo sensible llegó a un commit: revoca/rota la clave y límpialo
+# del historial (git filter-repo o BFG), no basta con añadirlo aquí.
+# =====================================================================
+
+
+# ---------------------------------------------------------------------
+# 1. VARIABLES DE ENTORNO
+# Protege: API keys, tokens, contraseñas de BD, URLs privadas y
+# cualquier valor que cambie entre desarrollo, staging y producción.
+# ---------------------------------------------------------------------
+.env
+.env.*
+*.env
+.envrc
+
+# Plantillas PÚBLICAS: sí se versionan (solo nombres de variables,
+# nunca valores reales). Deben ir DESPUÉS de las reglas de arriba.
+!.env.example
+!.env.sample
+!.env.template
+!.env.dist
+
+
+# ---------------------------------------------------------------------
+# 2. CLAVES PRIVADAS Y CERTIFICADOS
+# Protege: claves SSH/TLS/firma, keystores móviles y certificados con
+# clave privada. Su filtración permite suplantar tu servidor o app.
+# ---------------------------------------------------------------------
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.jks
+*.keystore
+*.ppk
+id_rsa
+id_rsa.*
+id_dsa
+id_ecdsa
+id_ed25519
+id_ed25519.*
+
+
+# ---------------------------------------------------------------------
+# 3. CREDENCIALES EN JSON / YAML / XML
+# Protege: cuentas de servicio (Google, Firebase), OAuth client secrets
+# y configs con contraseñas. Se usan nombres específicos a propósito:
+# ignorar "*.json" completo también excluiría package.json y similares.
+# ---------------------------------------------------------------------
+# JSON
+credentials.json
+credentials.*.json
+*-credentials.json
+client_secret*.json
+service-account*.json
+serviceAccount*.json
+*firebase-adminsdk*.json
+google-services.json
+GoogleService-Info.plist
+secrets.json
+secrets.*.json
+*.secrets.json
+*.local.json
+local.settings.json
+
+# YAML
+credentials.yml
+credentials.yaml
+secrets.yml
+secrets.yaml
+secrets.*.yml
+secrets.*.yaml
+*.secrets.yml
+*.secrets.yaml
+*.local.yml
+*.local.yaml
+
+# XML
+credentials.xml
+secrets.xml
+*-secrets.xml
+*-credentials.xml
+
+# Rails master key y credenciales cifradas por entorno
+config/master.key
+config/credentials/*.key
+
+
+# ---------------------------------------------------------------------
+# 4. ARCHIVOS DE SECRETOS, GESTORES Y CREDENCIALES DE INFRA
+# Protege: carpetas de secretos, bases de contraseñas, accesos a la
+# nube/contenedores y estado de Terraform (puede contener valores en
+# texto plano).
+# ---------------------------------------------------------------------
+*.secret
+*.secrets
+secret/
+secrets/
+.secrets/
+*.kdbx
+.htpasswd
+.netrc
+.aws/
+.azure/
+.kube/
+.docker/config.json
+
+# Terraform
+*.tfvars
+*.tfvars.json
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Tokens de registro de paquetes: descomenta si tu .npmrc incluye
+# _authToken (si solo define el registro público, puede versionarse).
+# .npmrc
+
+
+# ---------------------------------------------------------------------
+# 5. LOGS
+# Protege: trazas y salidas que suelen colar tokens, correos, IDs de
+# usuario, consultas SQL y rutas internas del sistema.
+# ---------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ---------------------------------------------------------------------
+# 6. DATOS LOCALES DE DESARROLLO
+# Protege: bases de datos locales, volcados con datos reales de
+# usuarios, cachés y configuración personal del editor (a veces con
+# tokens o rutas privadas).
+# ---------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.bak
+*.sql.gz
+dump.sql
+.local/
+tmp/
+temp/
+.cache/
+
+# Editor / sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Vercel (guarda IDs de proyecto/organización)
+.vercel
+
+
+# ---------------------------------------------------------------------
+# 7. DEPENDENCIAS Y BUILD (proyecto Node / Next.js)
+# Protege indirectamente: los bundles compilados pueden incrustar
+# variables de entorno (p. ej. NEXT_PUBLIC_*) en texto plano.
+# ---------------------------------------------------------------------
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
